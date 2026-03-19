@@ -38,9 +38,34 @@ function App() {
     <div className="layout-container">
       {/* Interaction Pane */}
       <div className="pane">
-        <div className="pane-header">
-          <h2 style={{ color: 'var(--text-primary)' }}>Authentication Explorer</h2>
-          <p style={{ color: 'var(--text-secondary)' }}>Interact with different authentication flows.</p>
+        <div className="pane-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h2 style={{ color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Authentication Explorer</h2>
+            <p style={{ color: 'var(--text-secondary)' }}>Interact with different authentication flows.</p>
+          </div>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', opacity: 0.8 }}>
+            <a 
+              href="https://tsvillain.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.85rem' }}
+              onMouseOver={e => e.currentTarget.style.color = 'var(--text-primary)'}
+              onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
+              Portfolio
+            </a>
+            <iframe 
+              src="https://ghbtns.com/github-btn.html?user=tsvillain&repo=authentication-explorer&type=star&count=true" 
+              frameBorder="0" 
+              scrolling="0" 
+              width="90" 
+              height="20" 
+              title="GitHub"
+              style={{ opacity: 0.8, filter: 'grayscale(100%)', transition: 'filter 0.3s, opacity 0.3s' }}
+              onMouseOver={e => { e.currentTarget.style.filter = 'none'; e.currentTarget.style.opacity = '1'; }}
+              onMouseOut={e => { e.currentTarget.style.filter = 'grayscale(100%)'; e.currentTarget.style.opacity = '0.8'; }}
+            ></iframe>
+          </div>
         </div>
         <div className="glass-panel pane-content" style={{ overflowY: 'auto' }}>
           <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
