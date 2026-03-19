@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'client'|'server', type?: 'success'|'error'|'info') => void }) {
+export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'client' | 'server', type?: 'success' | 'error' | 'info') => void }) {
   const [step, setStep] = useState(0);
   const [authCode, setAuthCode] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -9,7 +9,7 @@ export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'c
     addLog(`[Client] Redirecting Browser to Auth Server (Google/GitHub)`, 'client', 'info');
     addLog(`GET https://auth-server.com/authorize?response_type=code&client_id=MY_APP&redirect_uri=MY_APP/cb`, 'client', 'info');
     setStep(1);
-    
+
     setTimeout(() => {
       addLog(`[Auth Server] Asking User: "Do you allow MY_APP to access your profile?"`, 'server', 'info');
     }, 1000);
@@ -17,11 +17,11 @@ export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'c
 
   const simulateUserConsent = () => {
     addLog(`[Auth Server] User clicked "Allow". Generating Authorization Code.`, 'server', 'success');
-    
+
     setTimeout(() => {
       const code = "auth_code_" + Math.random().toString(36).substring(2, 8);
       addLog(`[Auth Server] Redirecting back to Client: HTTP 302 Location: MY_APP/cb?code=${code}`, 'server', 'info');
-      
+
       setTimeout(() => {
         addLog(`[Browser] Landed on /cb. Extracting code from URL: ${code}`, 'client', 'success');
         setAuthCode(code);
@@ -32,10 +32,10 @@ export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'c
 
   const exchangeCodeForToken = () => {
     addLog(`POST https://auth-server.com/token\nBody: grant_type=authorization_code&code=${authCode}&client_secret=MY_SECRET`, 'client', 'info');
-    
+
     setTimeout(() => {
       addLog(`[Auth Server] Validating code & secret...`, 'server', 'info');
-      
+
       setTimeout(() => {
         const token = "access_token_" + Math.random().toString(36).substring(2, 10);
         addLog(`[Auth Server] Code valid! HTTP 200 OK - { "access_token": "${token}" }`, 'server', 'success');

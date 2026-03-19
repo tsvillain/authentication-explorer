@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export type LogEntry = {
   id: string;
@@ -18,15 +18,15 @@ export default function LogViewer({ logs }: { logs: LogEntry[] }) {
   }, [logs]);
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="glass-panel pane-content" 
+      className="glass-panel pane-content"
       style={{ fontFamily: 'monospace', background: 'rgba(0,0,0,0.4)', padding: '1rem', overflowY: 'auto' }}
     >
       {logs.length === 0 && (
         <div style={{ color: 'var(--success)', opacity: 0.8 }}>[System] Waiting for interactions...</div>
       )}
-      
+
       {logs.map((log) => {
         let color = '#f8fafc';
         if (log.type === 'success') color = 'var(--success)';
@@ -34,8 +34,8 @@ export default function LogViewer({ logs }: { logs: LogEntry[] }) {
         if (log.type === 'info') color = '#38bdf8'; // light blue
 
         return (
-          <div key={log.id} style={{ 
-            marginBottom: '0.75rem', 
+          <div key={log.id} style={{
+            marginBottom: '0.75rem',
             padding: '0.5rem',
             background: log.source === 'server' ? 'rgba(236, 72, 153, 0.05)' : 'rgba(99, 102, 241, 0.05)',
             borderLeft: `3px solid ${log.source === 'server' ? 'var(--secondary)' : 'var(--primary)'}`,
@@ -52,7 +52,7 @@ export default function LogViewer({ logs }: { logs: LogEntry[] }) {
           </div>
         );
       })}
-      
+
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateX(-10px); }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export default function StatelessDemo({ addLog }: { addLog: (msg: string, source: 'client'|'server', type?: 'success'|'error'|'info') => void }) {
+export default function StatelessDemo({ addLog }: { addLog: (msg: string, source: 'client' | 'server', type?: 'success' | 'error' | 'info') => void }) {
   const [jwt, setJwt] = useState<string | null>(null);
   const [username, setUsername] = useState('user@example.com');
   const [password, setPassword] = useState('password123');
@@ -14,16 +14,16 @@ export default function StatelessDemo({ addLog }: { addLog: (msg: string, source
 
   const handleLogin = () => {
     addLog(`POST /login (username: ${username}, password: ${password})`, 'client', 'info');
-    
+
     setTimeout(() => {
       addLog(`[DB Query] Validating credentials for ${username}`, 'server', 'info');
-      
+
       setTimeout(() => {
         const token = createMockJWT();
         addLog(`[Success] Credentials valid. Server stateless, not storing session.`, 'server', 'success');
         addLog(`[JWT] Signing Token: Header(alg:HS256) + Payload(sub:${username}) + SecretKey`, 'server', 'info');
         addLog(`HTTP 200 OK - { "token": "${token}" }`, 'server', 'info');
-        
+
         setJwt(token);
         addLog(`[Browser] Received Token. Saving to LocalStorage/Memory.`, 'client', 'success');
       }, 800);
@@ -38,10 +38,10 @@ export default function StatelessDemo({ addLog }: { addLog: (msg: string, source
     }
 
     addLog(`GET /protected-data\nAuthorization: Bearer ${jwt.substring(0, 20)}...`, 'client', 'info');
-    
+
     setTimeout(() => {
       addLog(`[JWT Validate] Checking signature with Server SecretKey...`, 'server', 'info');
-      
+
       setTimeout(() => {
         addLog(`[Success] Signature verified! Payload: sub=user@example.com`, 'server', 'success');
         addLog('HTTP 200 OK - { "data": "Secret Stateless Data" }', 'server', 'info');
@@ -60,7 +60,7 @@ export default function StatelessDemo({ addLog }: { addLog: (msg: string, source
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <p style={{ color: 'var(--text-secondary)' }}>
-        Stateless authentication uses JWTs (JSON Web Tokens). The server does not store session state. 
+        Stateless authentication uses JWTs (JSON Web Tokens). The server does not store session state.
         Instead, it cryptographically signs the token. The client sends it via the Authorization header.
       </p>
 
