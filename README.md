@@ -31,7 +31,7 @@ API Keys are long-lived, opaque strings typically used for server-to-server or p
 
 ### 4. OAuth 2.0 (Delegated Authorization)
 OAuth 2.0 allows a third-party application to obtain limited access to an HTTP service without the user having to share their main credentials.
-- **The Flow**: The user clicks "Login with X". They are redirected to the Authorization Server (e.g., Google/GitHub). After logging in there, they consent to share data. The Authorization Server redirects the user back to the client application with an Authorization Code. The client application then exchanges this code with the Authorization Server for an Access Token.
+- **The Flow**: The user clicks "Login with X". They are redirected to the Authorization Server (e.g., Google/GitHub). After logging in there, they consent to share data (or they can choose to deny access). If allowed, the Authorization Server redirects the user back to the client application with an Authorization Code. The client application then exchanges this code with the Authorization Server for an Access Token. If denied, they are redirected back with an error.
 - **Subsequent Requests**: The client uses the Access Token to make requests to the Resource Server (API) using the Bearer token scheme.
 - **Pros**: Extremely secure, users don't share passwords with developers, standardized flow globally.
 - **Cons**: Most complex to implement, requires multiple moving parts (Client, Resource Server, Authorization Server).

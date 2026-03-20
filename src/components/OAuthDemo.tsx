@@ -30,6 +30,19 @@ export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'c
     }, 600);
   };
 
+  const simulateUserDeny = () => {
+    addLog(`[Auth Server] User clicked "Deny".`, 'server', 'error');
+
+    setTimeout(() => {
+      addLog(`[Auth Server] Redirecting back to Client: HTTP 302 Location: MY_APP/cb?error=access_denied`, 'server', 'error');
+
+      setTimeout(() => {
+        addLog(`[Browser] Landed on /cb. Access denied by user.`, 'client', 'error');
+        resetFlow();
+      }, 800);
+    }, 600);
+  };
+
   const exchangeCodeForToken = () => {
     addLog(`POST https://auth-server.com/token\nBody: grant_type=authorization_code&code=${authCode}&client_secret=MY_SECRET`, 'client', 'info');
 
@@ -79,7 +92,10 @@ export default function OAuthDemo({ addLog }: { addLog: (msg: string, source: 'c
         <div style={{ background: 'rgba(236, 72, 153, 0.1)', border: '1px solid var(--secondary)', padding: '1.5rem', borderRadius: '8px' }}>
           <h4 style={{ color: 'var(--secondary)', marginBottom: '1rem' }}>Auth Server Perspective</h4>
           <p style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>"MY_APP" wants to access your profile.</p>
-          <button className="btn" style={{ background: 'var(--success)' }} onClick={simulateUserConsent}>User Clicks: Allow Access</button>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button className="btn" style={{ background: 'var(--success)' }} onClick={simulateUserConsent}>User Clicks: Allow Access</button>
+            <button className="btn" style={{ background: 'var(--error)' }} onClick={simulateUserDeny}>User Clicks: Deny Access</button>
+          </div>
         </div>
       )}
 
